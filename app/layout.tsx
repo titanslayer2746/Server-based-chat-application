@@ -1,11 +1,11 @@
+import { ThemeProvider } from '@/components/providers/theme-provider'
 import {
   ClerkProvider,
   SignInButton,
-  SignedIn,
   SignedOut,
-  UserButton
 } from '@clerk/nextjs'
 import './globals.css'
+import { cn } from '@/lib/utils'
 export default function RootLayout({
   children,
 }: {
@@ -13,12 +13,22 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body>
+      <html lang="en" suppressHydrationWarning>
+        <body className={cn(
+          "bg-white dark:bg-[#313338]"
+        )}>
           <SignedOut>
             <SignInButton />
           </SignedOut>
+          <ThemeProvider 
+          attribute="class"
+          defaultTheme='dark'
+          enableSystem
+          storageKey='app-theme'
+          >
           {children}
+          </ThemeProvider>
+          
         </body>
       </html>
     </ClerkProvider>
